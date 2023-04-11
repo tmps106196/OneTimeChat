@@ -54,8 +54,9 @@ function sendMessage() {
     console.log("sending message")
     // send message at sender or receiver side
     if (conn && conn.open) {
-        printMsg("你     : " + msg.value)
+        printMsg("你 : " + msg.value)
         conn.send(msg.value);
+        document.querySelector("#msg").value = ""
     }
 }
 
