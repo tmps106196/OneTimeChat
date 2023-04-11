@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P</title>
+</head>
+<body>
+
+	<body style="background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)"></body>
+
+	<style>
+
+		.urlcon{
+			background: rgb(255, 255, 255);
+			padding: 10px 15px;
+			color: darkblue;
+			font-weight: bolder;
+			text-transform: uppercase;
+			font-size: 18px;
+			border-radius:  10px;
+			box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 75);
+			font-family: Arial, Helvetica, sans-serif;
+			text-decoration: none;
+			transition: 0.4s;
+		}
+
+		.urlcon:hover{
+			background: #34495e;
+			color: white;
+		}
+
+		.peerbox{
+			background: rgb(255, 255, 255);
+			padding: 10px 15px;
+			color: darkblue;
+			font-weight: bolder;
+			text-transform: uppercase;
+			font-size: 18px;
+			border-radius:  10px;
+			box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 75);
+			font-family: Arial, Helvetica, sans-serif;
+			text-decoration: none;
+			transition: 0.4s;
+		}
+
+		.peerbox:hover{
+			background: #34495e;
+			color: white;
+		}
+
+		.ok{
+			background: rgb(255, 255, 255);
+			padding: 10px 15px;
+			color: darkblue;
+			font-weight: bolder;
+			text-transform: uppercase;
+			font-size: 18px;
+			border-radius:  10px;
+			box-shadow: 6px 6px 10px -4px rgba(0, 0, 0, 75);
+			font-family: Arial, Helvetica, sans-serif;
+			text-decoration: none;
+			transition: 0.4s;
+		}
+
+		.ok:hover{
+			background: #34495e;
+			color: white;
+		}
+
+
+		.error{
+			width: 99%;
+			height: 100%;
+			position: absolute;
+			top: 0%;
+			display: none;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.error-box{
+			height: 350px;
+			width: 350px;
+			background: #fff;
+			padding: 20px;
+			border-radius: 30px;
+			position: relative;
+      		box-shadow: 6px 6px 29px rgba(0, 0, 0, 75);
+      		text-align:center;
+		}
+
+		.close{
+			position: absolute;
+			top: -20px;
+			right: -20px;
+			background: #fff;
+			height: 20px;
+			width: 20px;
+			border-radius: 50%;
+			box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);
+			cursor: pointer;
+		}
+
+
+
+		.urltest{
+			width: 99%;
+			height: 100%;
+			position: absolute;
+			top: 0%;
+			display: none;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.urltest-box{
+			height: 350px;
+			width: 350px;
+			background: #fff;
+			padding: 20px;
+			border-radius: 30px;
+			position: relative;
+      		box-shadow: 6px 6px 29px rgba(0, 0, 0, 75);
+      		text-align:center;
+		}
+
+		.peer{
+			width: 99%;
+			height: 100%;
+			position: absolute;
+			top: 0%;
+			display: none;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.peer-box{
+			height: 350px;
+			width: 350px;
+			background: #fff;
+			padding: 20px;
+			border-radius: 30px;
+			position: relative;
+      		box-shadow: 6px 6px 29px rgba(0, 0, 0, 75);
+      		text-align:center;
+		}
+
+		.chat{
+			width: 99%;
+			height: 98%;
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.chatbar{
+			height: 550px;
+			width: 330px;
+			background: #fff;
+			padding: 60px;
+			border-radius: 30px;
+			position: relative;
+      		box-shadow: 6px 6px 29px rgba(0, 0, 0, 75);
+      		text-align:center;
+		}
+
+		.chatword{
+			height: 550px;
+			width: 300px;
+		}
+
+		.close2{
+			position: absolute;
+			top: -20px;
+			right: -20px;
+			background: #fff;
+			height: 20px;
+			width: 20px;
+			border-radius: 50%;
+			box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);
+			cursor: pointer;
+		}
+
+		.close3{
+			position: absolute;
+			top: -20px;
+			right: -20px;
+			background: #fff;
+			height: 20px;
+			width: 20px;
+			border-radius: 50%;
+			box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);
+			cursor: pointer;
+		}
+	</style>
+   
+
+
+
+
+
+
+	<div class="chat">
+		<div class="chatbar">
+			<div class="chatword" style="overflow-y:auto;">
+				<p id="messages" style="font-family: Arial, Helvetica;word-wrap: break-word;word-break: break-all;"></p>
+			</div>
+			
+			<div style="height: 100px;">
+				<button class="peerbox" style="font-family: Arial, Helvetica, sans-serif;outline-style: none;" id="peerbox">配對</button>
+				<input type="text" id="msg" placeholder="Type Word Here" class="msgbox" size="25" style="height:30px;outline-style: none;border-radius:10px;border:0;box-shadow: 6px 6px 29px -4px rgba(0, 0, 0, 0.75);cursor: not-allowed;" readonly>
+				<img id="sendMessage" src="img/fly.png" alt="" onclick="sendMessage()" width="35" style="position:relative;top:12px;cursor: not-allowed;">
+			</div>
+
+		</div>
+    </div>
+
+	
+	<div class="urltest">
+		<div class="urltest-box">
+			<img src="img/close.png" alt="close" class="close2">
+			<h2 style="font-family: Arial, Helvetica, sans-serif;">發現連結內包含ID</h2>
+			<p id="urlid" style="font-family: Arial, Helvetica, sans-serif;"></p>
+			<button id="urlcon" onclick="connect()" class="urlcon">直接連接</button>
+		</div>
+	</div>
+	
+	<div class="error">
+		<div class="error-box">
+			<img src="img/close.png" alt="close" class="close">
+			<h2 style="font-family: Arial, Helvetica, sans-serif;">發生了錯誤:</h2>
+			<p id="err" style="font-family: Arial, Helvetica, sans-serif;">No More Info</p>
+			<button id="ok" class="ok">確定</button>
+		</div>
+	</div>
+
+	<div class="peer">
+		<div class="peer-box">
+			<img src="img/close.png" alt="close" class="close3" id="close3">
+			<h2 style="font-family: Arial, Helvetica, sans-serif;">配對:</h2>
+			<p id="peerid" style="font-family: Arial, Helvetica, sans-serif;">loading...</p>
+			<img src="" alt="qrcode error" id="qrcode">
+		</div>
+	</div>
+
+    <script src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/firework.js"></script>
+</body>
+</html>
