@@ -44,6 +44,9 @@ peer.on('connection', function (c) {
         // Receive messages - receiver side
         conn.on('data', function (data) {
             console.log('Received', data);
+            const audio = document.getElementById("audio-element");
+            audio.currentTime = 0;
+            audio.play();
             printMsg("對方 : " + data)
         });
     });
@@ -51,10 +54,12 @@ peer.on('connection', function (c) {
 
 function sendMessage() {
     var msg = document.querySelector("#msg")
+    
     console.log("sending message")
     // send message at sender or receiver side
     if (conn && conn.open) {
         printMsg("你 : " + msg.value)
+    
         conn.send(msg.value);
         document.querySelector("#msg").value = ""
     }
@@ -64,7 +69,6 @@ function printMsg(msg) {
     var messages = document.querySelector("#messages")
     messages.innerHTML = messages.innerHTML + msg + "<br><br>"
 }
-
 
 function connect() {
     var fpeerIDField = idd
@@ -81,7 +85,10 @@ function connect() {
         // Receive messages - sender side
         conn.on('data', function (data) {
             console.log('Received', data);
-            printMsg("Friend : " + data)
+            const audio = document.getElementById("audio-element");
+            audio.currentTime = 0;
+            audio.play();
+            printMsg("對方 : " + data)
         });
     });
 }
