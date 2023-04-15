@@ -15,19 +15,17 @@ if(url.indexOf('?')!=-1)
     var ary3 = ary2[0].split('=');
     var idd = ary3[1];
     idd = idd.replace("#","");
-    console.log(idd);
-    urlidtest.style.display = "flex";
-    urlid.innerHTML = idd
+    urlhaveid()
 };
 
-
+var urll = ""
 // when connection is created, handle the event - 
 peer.on('open', function (id) {
     console.log('Connected to Signaling Server ID : ' + id);
     // set the input value
     var peerIDField = document.querySelector("#peerid")
-    peerIDField.innerHTML = window.location.protocol + "//" + window.location.host + location.pathname + "?id=" +id
-    document.getElementById("qrcode").src = "https://chart.googleapis.com/chart?cht=qr&chl=" + window.location.protocol + "//" + window.location.host + location.pathname + "?id=" +id + "&chs=200x200";
+    
+    urll = window.location.protocol + "//" + window.location.host + location.pathname + "?id=" +id
 });
 
 peer.on('connection', function (c) {
@@ -53,17 +51,33 @@ peer.on('connection', function (c) {
 });
 
 function sendMessage() {
-    var msg = document.querySelector("#msg")
+    var msgbox = document.getElementById("msg")
+    if(msgbox.style.cursor!="not-allowed"){
+        console.log(msgbox.style.cursor);
+        var msg = document.querySelector("#msg")
+        if(msg.value == 0){
+            postapace()
+        }
+        else{
+            console.log("sending message")
+            // send message at sender or receiver side
+            if (conn && conn.open) {
+                printMsg("你 : " + msg.value)
     
-    console.log("sending message")
-    // send message at sender or receiver side
-    if (conn && conn.open) {
-        printMsg("你 : " + msg.value)
-    
-        conn.send(msg.value);
-        document.querySelector("#msg").value = ""
+                conn.send(msg.value);
+                document.querySelector("#msg").value = ""  
     }
+
+    
+    else{
+          
+    }}
 }
+}
+    
+
+    
+
 
 function printMsg(msg) {
     var messages = document.querySelector("#messages")
@@ -79,7 +93,6 @@ function connect() {
     conn.on('open', function () {
         document.getElementById("msg").style.cursor = "auto";
         document.getElementById("sendMessage").style.cursor = "auto";
-        document.querySelector(".urltest").style.display = "none";
         console.log("connected")
         document.getElementById("msg").readOnly = false;
         // Receive messages - sender side
@@ -93,27 +106,84 @@ function connect() {
     });
 }
 
+var errormsg = ""
+
 peer.on('error', function(err){
     console.log(err)
-    document.getElementById("err").innerHTML = (err)
-    document.querySelector(".error").style.display = "flex";
+    errormsg = err
+    swal.fire({
+        title: '錯誤',
+        text: errormsg ,
+        icon: "error",
+        
+        showCancelButton: false
+      }).then(function(result) {
+        if (result.value) {
+          console.log('button A pressed')
+        } else {
+          console.log('button B pressed')
+        }
+      })
+
+
 })
+
+function postapace() {
+    Swal.fire(
+        "傳送失敗",
+        "內容不得為空",
+        "error"
+    );
+}
+
+
+
+
+document.getElementById("peerbox").addEventListener("click", function(){
+    getcon();
+})
+
+function getcon() {
+    Swal.fire(
+        "連線",
+        "連結:" + urll + "<br>" + "<img src='https://chart.googleapis.com/chart?cht=qr&chl=" + urll + "&chs=200x200'>",
+        
+    );
+}
+
+function urlhaveid() {
+    Swal.fire({
+        title: "連結中包含ID",
+        text: "是否進行連接",
+        showCancelButton: true
+    }).then(function(result) {
+       if (result.value) {
+            connect()
+       }
+       else {
+        
+       }
+    });
+}
+
+var input = document.getElementById("msg");
+input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("sendMessage").click();
+    }
+});
+
 
 document.querySelector(".close").addEventListener("click", function(){
     document.querySelector(".error").style.display = "none";
-})
-
-document.querySelector(".close2").addEventListener("click", function(){
-    document.querySelector(".urltest").style.display = "none";
 })
 
 document.getElementById("ok").addEventListener("click", function(){
     document.querySelector(".error").style.display = "none";
 })
 
-document.getElementById("peerbox").addEventListener("click", function(){
-    document.querySelector(".peer").style.display = "flex";
-})
+
 
 document.getElementById("close3").addEventListener("click", function(){
     document.querySelector(".peer").style.display = "none";
